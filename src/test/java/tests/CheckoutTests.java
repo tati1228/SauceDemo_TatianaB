@@ -1,7 +1,7 @@
 package tests;
 
 import helpers.FileFormat;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -25,48 +25,48 @@ public class CheckoutTests extends BaseTest {
         checkoutStepOnePage.setPersonalData(FIRST_NAME, LAST_NAME, ZIP_CODE);
         checkoutStepOnePage.clickContinueButton();
         checkoutStepTwoPage.clickFinishButton();
-        Assert.assertEquals("There should be " + THANK_YOU_MESSAGE + " message.", THANK_YOU_MESSAGE, checkoutCompletePage.getHeaderText());
+        Assert.assertEquals(checkoutCompletePage.getHeaderText(), THANK_YOU_MESSAGE, "There should be " + THANK_YOU_MESSAGE + " message.");
         checkoutCompletePage.clickBackHomeButton();
-        Assert.assertTrue("The inventory page should be opened.", productsPage.isHeaderContainerDisplayed());
+        Assert.assertTrue(productsPage.isHeaderContainerDisplayed(), "The inventory page should be opened.");
     }
 
     @Test(groups = {"Regression"})
     public void positiveCheckoutContinueShoppingTest() {
         loginPage.login(USERNAME, PASSWORD);
-        productsPage.clickAddRemoveButton(2);
+        productsPage.clickAddToCartButton("Sauce Labs Bike Light");
         productsPage.clickShoppingCartLink();
-        Assert.assertTrue("'Your cart' page title should be displayed.", cartPage.isYourCartTitleDisplayed());
+        Assert.assertTrue(cartPage.isYourCartTitleDisplayed(), "'Your cart' page title should be displayed.");
         cartPage.clickContinueShoppingButton();
-        Assert.assertTrue("The inventory page should be opened.", productsPage.isHeaderContainerDisplayed());
+        Assert.assertTrue(productsPage.isHeaderContainerDisplayed(), "The inventory page should be opened.");
     }
 
     @Test(groups = {"Regression"})
     public void positiveCheckoutAfterCancelTest() {
         loginPage.login(USERNAME, PASSWORD);
-        productsPage.clickAddRemoveButton(2);
+        productsPage.clickAddToCartButton("Sauce Labs Bike Light");
         productsPage.clickShoppingCartLink();
         cartPage.clickCheckoutButton();
         checkoutStepOnePage.clickCancelButton();
-        Assert.assertTrue("'Your cart' page title should be displayed.", cartPage.isYourCartTitleDisplayed());
+        Assert.assertTrue(cartPage.isYourCartTitleDisplayed(), "'Your cart' page title should be displayed.");
         cartPage.clickCheckoutButton();
         checkoutStepOnePage.setPersonalData(FIRST_NAME, LAST_NAME, ZIP_CODE);
         checkoutStepOnePage.clickContinueButton();
         checkoutStepTwoPage.clickCancelButton();
-        productsPage.clickAddRemoveButton(3);
+        productsPage.clickAddToCartButton("Sauce Labs Bolt T-Shirt");
         productsPage.clickShoppingCartLink();
         cartPage.clickCheckoutButton();
         checkoutStepOnePage.setPersonalData(FIRST_NAME, LAST_NAME, ZIP_CODE);
         checkoutStepOnePage.clickContinueButton();
         checkoutStepTwoPage.clickFinishButton();
-        Assert.assertEquals("There should be " + THANK_YOU_MESSAGE + " message.", THANK_YOU_MESSAGE, checkoutCompletePage.getHeaderText());
+        Assert.assertEquals(checkoutCompletePage.getHeaderText(), THANK_YOU_MESSAGE, "There should be " + THANK_YOU_MESSAGE + " message.");
         checkoutCompletePage.clickBackHomeButton();
-        Assert.assertTrue("The inventory page should be opened.", productsPage.isHeaderContainerDisplayed());
+        Assert.assertTrue(productsPage.isHeaderContainerDisplayed(), "The inventory page should be opened.");
     }
 
     @Test(groups = {"Smoke", "Negative"})
     public void negativeCheckoutEmptyFieldsTest() {
         loginPage.login(USERNAME, PASSWORD);
-        productsPage.clickAddRemoveButton(2);
+        productsPage.clickAddToCartButton("Sauce Labs Bike Light");
         productsPage.clickShoppingCartLink();
         cartPage.clickCheckoutButton();
         checkoutStepOnePage.clickContinueButton();

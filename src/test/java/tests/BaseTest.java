@@ -36,7 +36,6 @@ public class BaseTest {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             driver = new ChromeDriver(options);
-         //   driver = new ChromeDriver();
         } else if (browser.equals("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();

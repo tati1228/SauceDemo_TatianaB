@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.TestDataParser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InventoryTests extends BaseTest {
 
     @DataProvider
@@ -27,14 +30,21 @@ public class InventoryTests extends BaseTest {
     @Test(groups = {"Regression"})
     public void inventorySortingTest() {
         loginPage.login(USERNAME, PASSWORD);
-        Assert.assertTrue(productsPage.isSelectOptionListCorrect(), "List of sorting options should be correct.");
+        List<String> expectedOptionNames = new ArrayList<>();
+        expectedOptionNames.add("Name (A to Z)");
+        expectedOptionNames.add("Name (Z to A)");
+        expectedOptionNames.add("Price (low to high)");
+        expectedOptionNames.add("Price (high to low)");
+        List<String> allOptionsNames = productsPage.getSelectOptionList();
+        Assert.assertTrue(allOptionsNames.equals(expectedOptionNames), "List of sorting options should be correct.");
     }
 
     @Test(groups = {"Regression"})
     public void cartItemsCounterTest() {
         loginPage.login(USERNAME, PASSWORD);
         productsPage.addRemoveAllProducts();
-        Assert.assertTrue(productsPage.isCartItemsCounterCorrect("6"), "There should be six products in the cart.");
+        String productsPerPage = Integer.toString(productsPage.getNumberOfProductsPerPage());
+        Assert.assertTrue(productsPage.isCartItemsCounterCorrect(productsPerPage), "There should be six products in the cart.");
         productsPage.addRemoveAllProducts();
         Assert.assertTrue(productsPage.isCartItemsCounterCorrect(""), "There should be no products in the cart.");
     }
