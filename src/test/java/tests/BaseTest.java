@@ -1,6 +1,7 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import logger.TestLogger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,13 +13,15 @@ import pages.*;
 
 public class BaseTest {
     protected WebDriver driver;
-    public LoginPage loginPage;
+    protected LoginPage loginPage;
     protected ProductsPage productsPage;
     protected DetailsPage detailsPage;
     protected CartPage cartPage;
     protected CheckoutStepOnePage checkoutStepOnePage;
     protected CheckoutStepTwoPage checkoutStepTwoPage;
     protected CheckoutCompletePage checkoutCompletePage;
+
+    final TestLogger logger = new TestLogger();
 
     protected String USERNAME = "standard_user";
     protected String PASSWORD = "secret_sauce";
@@ -30,6 +33,7 @@ public class BaseTest {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
+        logger.logInfo("Initialize a new driver.");
         String browser = System.getProperty("browser");
         if (browser.equals("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -59,6 +63,7 @@ public class BaseTest {
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
+        logger.logInfo("Quit the driver.");
         driver.quit();
     }
 
