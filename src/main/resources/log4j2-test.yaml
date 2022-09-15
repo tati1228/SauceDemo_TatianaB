@@ -1,0 +1,26 @@
+Configuration:
+  status: warn
+  name: YAMLConfigTest
+  properties:
+    property:
+      name: filename
+      value: build/test-results.log
+  appenders:
+    Console:
+      name: STDOUT
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%d  %p  %m%n"
+    File:
+      name: File
+      filename: ${filename}
+      append: false
+      PatternLayout:
+        Pattern: "%d %p %C [%t] %m%n"
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: STDOUT
+        - ref: File
